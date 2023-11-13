@@ -20,3 +20,5 @@
 # zapier or workflow tool
 
 # distribution
+
+# namecheap.com

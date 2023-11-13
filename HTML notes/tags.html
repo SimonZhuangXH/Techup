@@ -1,0 +1,64 @@
+
+
+<!DOCTYPE html>
+<html style="background-color: lightgray;">
+  <head>
+    <meta charset="UTF-8">
+    <title> Notes for HTML </title>
+    <link rel="stylesheet" href="style.css"/>
+  </head>
+  <style>
+    .SNSO {color:red} 
+    #DSO {color:blue}
+    a[draggable] {font-size: x-large;}
+  </style> <!-- CSS: . is for class and # is for id and * is for all-->
+  <body>
+    <!-- Every tag is opened and closed -->
+
+
+    <h1>Book</h1> <!-- header 1 -->
+    <h2 style="background-color: aqua;">Chapter 1</h2> <!-- header 2 -->
+    <h3 style="font-weight: 300;">Section 1</h3> <!-- header 3 -->
+    <h3 class="SNSO">Section 2</h3> <!-- uses SNSO class style -->
+    <h2 id="DSO">Chapter 2</h2>
+    <h3>Section 1</h3>
+    <h4>Diagram 1</h4>
+    <h2>Chapter 3</h2>
+    <h3>Section 1</h3>
+
+    <h3>Section 2</h3>
+
+    <p> <!-- paragraph -->
+      asdf
+      asdf <br> <!-- next line -->
+      asdf <br>
+      asdf
+      <hr> <!-- horizontal line break -->
+    </p>
+
+    <ul> <!-- unordered list -->
+      <li>asdf</li> <!-- list item -->
+      <li>asdf asdf  </li>
+    </ul>
+
+    <ol> <!-- ordered list -->
+
+      <style> 
+        ol {color: red;} 
+      </style> <!-- ol above is a selector i.e., all ol elements are now red -->
+
+      <li>asdf</li>
+      <li>asdf</li>
+      <li>
+        <a draggable="true" href="https://www.google.com">this is a link</a> <!-- anchor tag for hyperlink -->
+      </li>
+    </ol>
+
+    <img src="https://picsum.photos/199" alt="some description"> 
+    <!-- loads in image src = source, alt = alternative text description -->
+    <img src="https://raw.githubusercontent.com/appbrewery/webdev/main/puppy.gif" alt="doggo"> 
+    <!-- doggo -->
+    <p class="content"> asdf</p>
+  </body>
+
+</html>
