@@ -1,15 +1,20 @@
-const express = require("express");
-const path = require("path");
+import express from "express";
+import path from "path"
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+const __dirname = dirname(fileURLToPath(import.meta.url))
 const publicPath = path.join(__dirname,'public');
+
 const app = express(); // instantiates express
 const port = 3000;
+
 console.log(publicPath)
 
 app.use(express.static(publicPath));
 app.set('view engine', 'html');
 app.get('/', (req, res) => {
   console.log("Sent")
-  res.render(`${publicPath}/index.html`);
+  res.render(`${publicPath}/index`);
   console.log("Sent")
   });
 console.log("proceed to listen")
