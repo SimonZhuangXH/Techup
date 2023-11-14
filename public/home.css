@@ -38,5 +38,9 @@
 
 .ml5 .letters {
   display: inline-block;
+  /* margin-top: 1px;
+  margin-bottom: 1px; */
+  margin:auto;
+  font-size: 55px;
   opacity: 0;
 }
