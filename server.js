@@ -8,7 +8,7 @@ console.log(publicPath)
 app.use(express.static(publicPath));
 
 app.get('/', (req, res) => {
-    res.sendFile(`${publicPath}/boot.html`);
+    res.sendFile(`${publicPath}/index.html`);
     console.log("Sent")
   });
 console.log("proceed to listen")
