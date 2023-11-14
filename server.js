@@ -11,11 +11,10 @@ const port = 8080;
 console.log(publicPath)
 
 app.use(express.static(publicPath));
-app.set('view engine', 'html');
 
 app.get('/', (req, res) => {
-  console.log("Sent")
-  res.render(`${publicPath}/home`);
+  res.sendFile(`${publicPath}/home.html`);
+  console.log("Loaded")
   });
 
 console.log("proceed to listen")
