@@ -14,14 +14,10 @@ app.use(express.static(publicPath));
 app.set('view engine', 'html');
 app.get('/', (req, res) => {
   console.log("Sent")
-  res.render(`${publicPath}/index`);
+  res.render(`${publicPath}/home`);
   });
-console.log("proceed to listen");
 
-// app.use(bodyParser.urlencoded({extended: True}));
-// app.post("/submit", (req,res) => {
-//   console.log(req.body);
-// })
+console.log("proceed to listen")
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}.`);
