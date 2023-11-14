@@ -32,3 +32,5 @@ anime.timeline({loop: false})
     duration: 600,
     offset: '-=600'
   });
+
+  
