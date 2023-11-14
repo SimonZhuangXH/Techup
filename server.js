@@ -6,10 +6,11 @@ const port = 3000;
 console.log(publicPath)
 
 app.use(express.static(publicPath));
-
+app.set('view engine', 'html');
 app.get('/', (req, res) => {
-    res.sendFile(`${publicPath}/index.html`);
-    console.log("Sent")
+  console.log("Sent")
+  res.render(`${publicPath}/index.html`);
+  console.log("Sent")
   });
 console.log("proceed to listen")
 
