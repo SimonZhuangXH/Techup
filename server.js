@@ -9,8 +9,9 @@ app.use(express.static(publicPath));
 
 app.get('/', (req, res) => {
     res.sendFile(`${publicPath}/boot.html`);
+    console.log("Sent")
   });
-
+console.log("proceed to listen")
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}.`);
