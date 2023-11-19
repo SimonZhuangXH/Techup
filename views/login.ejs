@@ -1,51 +1,53 @@
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="light" style="background-color: #f8f9fa;">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="">
-        <meta name="author" content="">
-        <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
-    
-        <title>Authentication</title>
-    
-        <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/sign-in/">
-    
-        <!-- Bootstrap core CSS -->
-        <link href="https://getbootstrap.com/docs/4.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-        <!-- Custom styles for this template -->
-        <link href="signin.css" rel="stylesheet">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
 
-        <script src="https://getbootstrap.com/docs/4.0/dist/js/bootstrap.min.js"></script>
-      </head>
+    <title>Authentication</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/sign-in/">
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://getbootstrap.com/docs/4.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="signin.css" rel="stylesheet">
+
+    <script src="https://getbootstrap.com/docs/4.0/dist/js/bootstrap.min.js"></script>
+  </head>
   
 
-      <body class="text-center" cz-shortcut-listen="true">
-        <form class="form-signin" action="/login" method="POST">
-          <img class="mb-4" src="./img/sn_logo.png" alt="" width="113" height="32">
-          <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-
-          <input type="text" name="username" class="form-control" placeholder="Username" required="" autofocus="">
-          <input type="password" name="pass" class="form-control" placeholder="Password" required="">
-
-          <div class="checkbox mb-3">
-            <label>
-              <input type="checkbox" value="remember-me"> Remember me
-            </label>
-          </div>
-          <% if (locals.not_authenticated) { %>
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-              <strong>User does not exist or wrong password!</strong>
-            </div>
-          <% } %>
-          <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-          <p class="mt-5 mb-3 text-muted">© 2017-2018</p>
-        </form>
+  <body class="text-center" cz-shortcut-listen="true">
       
+    <form class="form-signin" action="/login" method="POST">
+      <img class="mb-4 mt-5" src="./img/sn_logo.png" alt="" width="368" height="80">
+      <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+      <label for="inputEmail" class="sr-only">Email address</label>
+      <input type="text" name="username" id="inputEmail" class="form-control" placeholder="Username" required="" autofocus="">
+      <label for="inputPassword" class="sr-only">Password</label>
+      <input type="password" name="pass" id="inputPassword" class="form-control" placeholder="Password" required="">
+
+      <div class="checkbox mb-3">
+        <label>
+          <input type="checkbox" value="remember-me"> Remember me
+        </label>
+      </div>
+      <% if (locals.not_authenticated) { %>
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          <strong>User does not exist or wrong password!</strong>
+        </div>
+      <% } %>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+      <p class="mt-5 mb-3 text-muted">© 2023</p>
+    </form>
     
+  
     <div id="torrent-scanner-popup" style="display: none;">
     </div>
 
-    
-</body>
+  
+  </body>
