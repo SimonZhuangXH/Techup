@@ -23,12 +23,12 @@ var authenticated = false
 
 app.get('/', (req, res) => {
   res.render(`login`);
-  console.log("login")
+  // console.log("login")
   });
 
 app.get('/login', (req, res) => {
   res.render(`login`);
-  console.log("login")
+  // console.log("login")
   });
 
 app.post("/login", (req,res) => {
@@ -38,11 +38,11 @@ app.post("/login", (req,res) => {
   const pass = req.body.pass
 
   if (uid.includes(user) && ups[uid.indexOf(user)]===pass) {
-    console.log("Authenticated")
+    // console.log("Authenticated")
     res.render('home', {authenticated:true})
     authenticated = true
   } else {
-    console.log(`Wrong pass for ${user}`)
+    console.log(`Wrong pass for user: ${user}`)
     res.render('login', {not_authenticated:true})
   }
 })
