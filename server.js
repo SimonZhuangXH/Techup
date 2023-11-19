@@ -64,9 +64,6 @@ app.get('/products', (req, res) => {
   }
   });
 
-
-console.log("proceed to listen")
-
 app.listen(port, () => {
   console.log(`Server running on port ${port}.`);
 })
