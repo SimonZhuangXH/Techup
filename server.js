@@ -28,12 +28,12 @@ app.get('/', (req, res) => {
   // console.log("login")
   });
 
-app.get('/login', (req, res) => {
-  res.render(`login`);
-  // console.log("login")
-  });
+// app.get('/login', (req, res) => {
+//   res.render(`login`);
+//   // console.log("login")
+//   });
 
-app.post("/login", (req,res) => {
+app.post("/", (req,res) => {
   const uid = process.env.ALLOWED.split(",");
   const ups = process.env.PASS.split(",");
   const user = req.body.username
