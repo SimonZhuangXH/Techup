@@ -1,5 +1,7 @@
 import dotenv from "dotenv"
 dotenv.config()
+import encrypt from "mongoose-encryption" 
+import md5 from "md5" // Hashing
 
 import express from "express";
 import path from "path"
