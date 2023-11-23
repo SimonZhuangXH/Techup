@@ -19,18 +19,12 @@ const app = express(); // instantiates express
 const port = 8080;
 console.log(publicPath);
 
-// Rendering and exposing directories
-app.use(express.static("public"));
-app.set('view engine','ejs');
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
-
 // Session Files for Auth
 app.use(session({
   secret: process.env.SESSIONAUTH,
   resave: false,
   saveUninitialized: false,
-  // cookie: { secure: true }
+  cookie: { secure: true }
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -55,56 +49,15 @@ passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-app.get('/', (req, res) => {
-  if (req.isAuthenticated()) {
-      res.redirect("/home");
-    } else {
-      res.render("login");
-    }
-  });
-
-app.post("/", function(req,res,next) {
-  const user = new User({
-    username: req.body.username,
-    password: req.body.password
-  })
-
-  req.login(user, function(err) {
+function registration(username,password) {
+  User.register({username: username},password, function(err,user) {
     if (err) {
-      console.log(err);
+      console.log(err)
     } else {
-      passport.authenticate("local", {
-        failureRedirect: "/",
-      })(req,res,function() {
-        res.redirect("/home")
-      })
+      passport.authenticate("local")
+      console.log("Successfully registered "+ username)
     }
   })
-})
-
-app.get('/home', (req, res) => {
-  if (req.isAuthenticated()) {
-    res.render(`home`);
-  } else {
-    res.render("login");
-  }
-  });
-
-app.get('/products', (req, res) => {
-  if (req.isAuthenticated()) {
-    res.render(`products`);
-  } else {
-    res.render("login");
-  }
-  });
-
-  app.get("/logout", function(req,res) {
-    req.logOut(function(err) {
-      if (err) {return next(err);}
-      res.redirect("/")
-    })
-  });
-
-app.listen(port, () => {
-  console.log(`Server running on port ${port}.`);
-});
+}
+// username and password
+registration("","")
