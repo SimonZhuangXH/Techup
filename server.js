@@ -105,6 +105,30 @@ app.get('/products', (req, res) => {
     })
   });
 
+  app.get('/substacks', (req, res) => {
+    if (req.isAuthenticated()) {
+      res.render(`substacks`);
+    } else {
+      res.render("login");
+    }
+    });
+
+  app.get('/query', (req, res) => {
+    if (req.isAuthenticated()) {
+      res.render(`query`);
+    } else {
+      res.render("login");
+    }
+    });
+
+  app.get('/test', (req, res) => {
+    if (req.isAuthenticated()) {
+      res.render(`test`);
+    } else {
+      res.render("login");
+    }
+    });
+
 app.listen(port, () => {
   console.log(`Server running on port ${port}.`);
 });
