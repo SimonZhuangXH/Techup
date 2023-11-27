@@ -35,8 +35,6 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-var authenticated = false
-
 // DB Mongoose Objects
 mongoose.connect(process.env.MONGO_DB).then(
   (result) => {console.log('Mongo_DB Connection Established')}).catch(
@@ -46,10 +44,21 @@ const userSchema = new mongoose.Schema({
   username: String, 
   password: String })
 userSchema.plugin(passportLocalMongoose);
+const substackSchema = new mongoose.Schema({
+  Title: String, 
+  Datetime: Date,
+  Summary: String,
+  Raw: String,
+  Author: String })
 const User = new mongoose.model(
   'users', 
   userSchema, 
   'users'); // my collection name
+
+const Substacks = new mongoose.model(
+  'substacks', 
+  substackSchema, 
+  'substacks'); // my collection name
 
 passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
@@ -105,9 +114,10 @@ app.get('/products', (req, res) => {
     })
   });
 
-  app.get('/substacks', (req, res) => {
+  app.get('/substacks', async (req, res) => {
     if (req.isAuthenticated()) {
-      res.render(`substacks`);
+      const data = await Substacks.find({})
+      res.render(`substacks`, {data:data});
     } else {
       res.render("login");
     }
