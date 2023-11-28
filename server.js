@@ -36,8 +36,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // DB Mongoose Objects
-mongoose.connect(process.env.MONGO_DB).then(
-  (result) => {console.log('Mongo_DB Connection Established')}).catch(
+const connection = mongoose.connect(process.env.MONGO_DB)
+connection.then(  (result) => {
+    console.log('Mongo_DB Connection Established');
+    const mongo_conn = result }).catch(
     (err) => {console.log(err)}
   );
 const userSchema = new mongoose.Schema({
@@ -117,7 +119,7 @@ app.get('/products', (req, res) => {
   app.get('/substacks', async (req, res) => {
     if (req.isAuthenticated()) {
       const data = await Substacks.find({})
-      res.render(`substacks`, {data:data});
+      res.render(`substacks`, {data:data, connection: connection, Substacks:Substacks});
     } else {
       res.render("login");
     }
