@@ -119,10 +119,14 @@ function AI_Baby() {
 }
 
 // Updating boardstate to calculate utility
-function Calc_Utility(board) {
+function Calc_Utility(board,row,col) {
     let AI = "O"
     let player = "X"
     let utility = 0
+    if (row > 1 && row < 4 && col > 1 && col < 4) { // arbitrary tie breaker preferring centre cells
+        utility += rand(5,9)
+        console.log("centre bonus:" + utility)
+    }
     for (let i = 0; i < 6; i++) {
         for (let j = 0; j < 6; j++) {
             // CheckWin and utility
@@ -162,12 +166,9 @@ function Calc_Utility(board) {
 
                 utility += 10 // more pieces on the board is marginally better
 
-                if (i > 1 && i < 4 && j > 1 && j < 4) { // arbitrary tie breaker preferring centre cells
-                    utility += rand(5,9)
-                }
-
+                console.log(utility)
             }
-            // console.log(utility)
+            
             //CheckLose
             if (board[i][j] === player) {
                 // Check horizontal lose
@@ -218,12 +219,13 @@ function Calc_Utility(board) {
                 if ((i === 2 || i === 3) && (j === 2 || j === 3)) {
                     utility -= 16
                 }
+                console.log(utility)
             }
-            // console.log(utility)
+            
         }
     }
     // board_util[i][j] = utility
-    // console.log(utility)
+    console.log(utility)
     return utility
 
 }
@@ -238,9 +240,9 @@ function AI_Normal() {
             // console.log(max_utility)
             // makes a new move and returns new boardstate
             let new_board = AIboopTokens(i,j,JSON.parse(JSON.stringify(boardState)))
-            // console.log("coord: " + i + "," + j)
-            // console.log(new_board)
-            let new_utility = Calc_Utility(new_board)
+            console.log("coord: " + i + "," + j)
+            console.log(new_board)
+            let new_utility = Calc_Utility(new_board,i,j)
             if (new_utility > max_utility) {
                 best_move = [i,j]
                 max_utility = new_utility
@@ -248,7 +250,7 @@ function AI_Normal() {
 
         }
     }
-    // console.log(best_move)
+    console.log(best_move)
     return best_move
 }
 
