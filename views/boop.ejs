@@ -1,0 +1,35 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boop Game</title>
+    <link rel="stylesheet" href="/boop.css">
+    <script src="boop.js" defer></script>
+</head>
+<body>
+<div id="game-container">
+    <div id="instructions">
+        <h2>Boop! A twist to tic-tac-toe...</h2>
+        <p>Each player takes turns placing tokens ('X' and 'O') on the board.</p>
+        <p>When a token is placed, it pushes adjacent tokens one square away, unless blocked by another token. Tokens on the edge of the board will be booped off the board.</p>
+        <p>The first player to have three adjacent tokens horizontally, vertically, or diagonally wins!</p>
+        <p>(Credits to DS Gwenda for oringinal game)</p>
+    </div>
+    <div class="difficulty">
+        <select id="difficulty" onchange="dropdown()">
+            <option value="baby">Baby AI</option>
+            <option value="normal">Normal AI</option>
+            <option value="terminator">Human/Terminator AI (coming soon)</option>
+        </select>
+    </div>
+    <div id="turn-indicator"></div>
+    <div class="gameboard" id="gameboard"></div>
+    <div id="message"></div>
+    <button id="new-game-btn">Start New Game</button>
+</div>
+
+
+</body>
+</html>

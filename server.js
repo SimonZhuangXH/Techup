@@ -141,6 +141,10 @@ app.get('/products', (req, res) => {
     }
     });
 
+  app.get('/boop', (req, res) => {
+      res.render(`boop`);
+    });
+
 app.listen(port, () => {
   console.log(`Server running on port ${port}.`);
 });
