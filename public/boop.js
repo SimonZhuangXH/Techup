@@ -47,8 +47,9 @@ function handleCellClick(event) {
             } else {
                 currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
                 updateTurnIndicator();
-
-                AI_move(difficulty) // Determines the type of AI
+                if (difficulty) {
+                    AI_move(difficulty) // Determines the type of AI
+                }
             }
         }
     }
@@ -66,6 +67,9 @@ function dropdown() {
     }
     if(selector.value == "terminator"){
         difficulty = AI_Terminator
+    }
+    if(selector.value == "human"){
+        difficulty = null
     }
 }
 
