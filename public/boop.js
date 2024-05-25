@@ -223,7 +223,7 @@ function Calc_Utility(board) {
         }
     }
     // board_util[i][j] = utility
-    console.log(utility)
+    // console.log(utility)
     return utility
 
 }
@@ -238,8 +238,8 @@ function AI_Normal() {
             // console.log(max_utility)
             // makes a new move and returns new boardstate
             let new_board = AIboopTokens(i,j,JSON.parse(JSON.stringify(boardState)))
-            console.log("coord: " + i + "," + j)
-            console.log(new_board)
+            // console.log("coord: " + i + "," + j)
+            // console.log(new_board)
             let new_utility = Calc_Utility(new_board)
             if (new_utility > max_utility) {
                 best_move = [i,j]
@@ -248,7 +248,7 @@ function AI_Normal() {
 
         }
     }
-    console.log(best_move)
+    // console.log(best_move)
     return best_move
 }
 
