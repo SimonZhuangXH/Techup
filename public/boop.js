@@ -14,7 +14,7 @@ let boardState = [
 let gameEnded = false;
 
 // Function to render the gameboard
-function renderGameboard() {
+function renderGameboard(row = 10, col = 10) {
     gameboard.innerHTML = '';
     for (let i = 0; i < 6; i++) {
         for (let j = 0; j < 6; j++) {
@@ -22,6 +22,9 @@ function renderGameboard() {
             cell.classList.add('cell');
             cell.dataset.row = i;
             cell.dataset.col = j;
+            if (i === row && j === col) {
+                cell.style.backgroundColor = "red"
+            }
             cell.innerText = boardState[i][j];
             cell.addEventListener('click', handleCellClick);
             gameboard.appendChild(cell);
@@ -82,7 +85,7 @@ function AI_move(difficulty) {
         if (boardState[row][col] === '') {
             boardState[row][col] = currentPlayer;
             boopTokens(row, col);
-            renderGameboard();
+            renderGameboard(row,col);
             if (checkWin('X')) {
                 message.innerText = `Player X wins!`;
                 gameEnded = true;
@@ -160,7 +163,7 @@ function Calc_Utility(board) {
                 utility += 10 // more pieces on the board is marginally better
 
                 if (i > 1 && i < 4 && j > 1 && j < 4) { // arbitrary tie breaker preferring centre cells
-                    utility += rand(1,6)
+                    utility += rand(5,9)
                 }
 
             }
@@ -220,7 +223,7 @@ function Calc_Utility(board) {
         }
     }
     // board_util[i][j] = utility
-    // console.log(utility)
+    console.log(utility)
     return utility
 
 }
@@ -235,8 +238,8 @@ function AI_Normal() {
             // console.log(max_utility)
             // makes a new move and returns new boardstate
             let new_board = AIboopTokens(i,j,JSON.parse(JSON.stringify(boardState)))
-            // console.log("coord: " + i + "," + j)
-            // console.log(new_board)
+            console.log("coord: " + i + "," + j)
+            console.log(new_board)
             let new_utility = Calc_Utility(new_board)
             if (new_utility > max_utility) {
                 best_move = [i,j]
@@ -245,7 +248,7 @@ function AI_Normal() {
 
         }
     }
-    // console.log(best_move)
+    console.log(best_move)
     return best_move
 }
 
