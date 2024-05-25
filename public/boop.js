@@ -119,13 +119,13 @@ function AI_Baby() {
 }
 
 // Updating boardstate to calculate utility
-function Calc_Utility(board,row,col) {
+function Calc_Utility(board,row = null, col = null) {
     let AI = "O"
     let player = "X"
     let utility = 0
     if (row > 1 && row < 4 && col > 1 && col < 4) { // arbitrary tie breaker preferring centre cells
         utility += rand(5,9)
-        console.log("centre bonus:" + utility)
+        // console.log("centre bonus:" + utility)
     }
     for (let i = 0; i < 6; i++) {
         for (let j = 0; j < 6; j++) {
@@ -166,7 +166,7 @@ function Calc_Utility(board,row,col) {
 
                 utility += 10 // more pieces on the board is marginally better
 
-                console.log(utility)
+                // console.log(utility)
             }
             
             //CheckLose
@@ -219,13 +219,13 @@ function Calc_Utility(board,row,col) {
                 if ((i === 2 || i === 3) && (j === 2 || j === 3)) {
                     utility -= 16
                 }
-                console.log(utility)
+                // console.log(utility)
             }
             
         }
     }
     // board_util[i][j] = utility
-    console.log(utility)
+    // console.log(utility)
     return utility
 
 }
@@ -240,8 +240,8 @@ function AI_Normal() {
             // console.log(max_utility)
             // makes a new move and returns new boardstate
             let new_board = AIboopTokens(i,j,JSON.parse(JSON.stringify(boardState)))
-            console.log("coord: " + i + "," + j)
-            console.log(new_board)
+            // console.log("coord: " + i + "," + j)
+            // console.log(new_board)
             let new_utility = Calc_Utility(new_board,i,j)
             if (new_utility > max_utility) {
                 best_move = [i,j]
@@ -250,14 +250,32 @@ function AI_Normal() {
 
         }
     }
-    console.log(best_move)
+    // console.log(best_move)
     return best_move
 }
 
-//AI Heuristic - Terminator (min-max; alpha-beta pruning; 5-step but might crash)
+//AI Heuristic - Terminator (minimax; alpha-beta pruning; 5-step but might crash)
 function AI_Terminator() {
-
+    let best_move = [10,10]
+    best_move = minimax(boardState,5,-9999,9999,True)
     return [row,col]
+}
+
+function minimax(board, depth, alpha, beta, AI) {
+    if (depth === 0) {
+        return Calc_Utility(board), []
+    }
+
+    if (AI) {
+        utility = -99999
+        
+
+        
+    }
+
+    else {
+        utility = 99999
+    }
 }
 // Function to update turn indicator
 function updateTurnIndicator() {
