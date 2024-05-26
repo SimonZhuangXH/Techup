@@ -268,9 +268,9 @@ function move_gen() {
             moves.push([i,j])
         }
     }
-    moves.sort(function (a, b) {
-        return Math.random() - 0.5;
-    });
+    // moves.sort(function (a, b) {
+    //     return Math.random() - 0.5;
+    // });
     return moves
 }
 
