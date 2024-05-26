@@ -256,7 +256,7 @@ function AI_Normal() {
 
 //AI Heuristic - Terminator (minimax; alpha-beta pruning; 5-step but might crash)
 function AI_Terminator() {
-    let [utility,best_moves] = minimax(boardState,3,-99999,99999,true)
+    let [utility,best_moves] = minimax(boardState,4,-99999,99999,true)
     // console.log("terminator:" + utility,best_moves)
     return best_moves.slice(-1).pop()
 }
@@ -274,11 +274,40 @@ function move_gen() {
     return moves
 }
 
+function AI_checkWin(board) {
+    let player = "O"
+    for (let i = 0; i < 6; i++) {
+        for (let j = 0; j < 6; j++) {
+            if (board[i][j] === player) {
+                // Check horizontal win
+                if (j + 2 < 6 && board[i][j + 1] === player && board[i][j + 2] === player) {
+                    return true;
+                }
+                // Check vertical win
+                if (i + 2 < 6 && board[i + 1][j] === player && board[i + 2][j] === player) {
+                    return true;
+                }
+                // Check diagonal win (top-left to bottom-right)
+                if (i + 2 < 6 && j + 2 < 6 && board[i + 1][j + 1] === player && board[i + 2][j + 2] === player) {
+                    return true;
+                }
+                // Check diagonal win (top-right to bottom-left)
+                if (i + 2 < 6 && j - 2 >= 0 && board[i + 1][j - 1] === player && board[i + 2][j - 2] === player) {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
 function minimax(board, depth, alpha, beta, AI) {
     if (depth === 0) {
         return [Calc_Utility(board), []]
     }
-
+    if (AI_checkWin(board)) {
+        return [Calc_Utility(board), []]
+    }
     let best_move = null
     let best_moves = []
     if (AI) { // maximiser
@@ -302,10 +331,11 @@ function minimax(board, depth, alpha, beta, AI) {
                 break
             }
         }
-        if (best_move) {
-            best_moves.push(best_move)
-        }
+        // if (best_move) {
+        //     best_moves.push(best_move)
+        // }
         // console.log("bestest:" + utility,best_moves)
+        best_moves.push(best_move)
         return [utility, best_moves]
     } 
     else { //minimiser
@@ -329,10 +359,11 @@ function minimax(board, depth, alpha, beta, AI) {
                 break
             }
         }
-        if (best_move) {
-            best_moves.push(best_move)
-        }
+        // if (best_move) {
+        //     best_moves.push(best_move)
+        // }
         // console.log("bestester:" + utility,best_moves)
+        best_moves.push(best_move)
         return [utility, best_moves]
     }
 }
