@@ -59,7 +59,7 @@ function handleCellClick(event) {
 }
 
 //Difficulty Selection
-let difficulty = AI_Baby
+let difficulty = AI_Terminator
 function dropdown() {
     var selector = document.getElementById("difficulty");
     if(selector.value == "baby"){
@@ -133,19 +133,19 @@ function Calc_Utility(board,row = null, col = null) {
             if (board[i][j] === AI) {
                 // Check horizontal win
                 if (j + 2 < 6 && board[i][j + 1] === AI && board[i][j + 2] === AI) {
-                    utility += 9999;
+                    utility += 10999;
                 }
                 // Check vertical win
                 if (i + 2 < 6 && board[i + 1][j] === AI && board[i + 2][j] === AI) {
-                    utility += 9999;
+                    utility += 10999;
                 }
                 // Check diagonal win (top-left to bottom-right)
                 if (i + 2 < 6 && j + 2 < 6 && board[i + 1][j + 1] === AI && board[i + 2][j + 2] === AI) {
-                    utility += 9999;
+                    utility += 10999;
                 }
                 // Check diagonal win (top-right to bottom-left)
                 if (i + 2 < 6 && j - 2 >= 0 && board[i + 1][j - 1] === AI && board[i + 2][j - 2] === AI) {
-                    utility += 9999;
+                    utility += 10999;
                 }
                 // Check 2 horizontal 
                 if (j + 1 < 6 && board[i][j + 1] === AI) {
@@ -164,7 +164,7 @@ function Calc_Utility(board,row = null, col = null) {
                     utility += 999;
                 }
 
-                utility += 10 // more pieces on the board is marginally better
+                utility += 30 // more pieces on the board is marginally better
 
                 // console.log(utility)
             }
@@ -189,19 +189,19 @@ function Calc_Utility(board,row = null, col = null) {
                 }
                 // Check 2 horizontal 
                 if (j + 1 < 6 && board[i][j + 1] === player) {
-                    utility -= 9999; // equal utility (lose) cos lose on next move
+                    utility -= 999; // equal utility (lose) cos lose on next move
                 }
                 // Check 2 vertical 
                 if (i + 1 < 6 && board[i + 1][j] === player) {
-                    utility -= 9999;
+                    utility -= 999;
                 }
                 // Check 2 diagonal (top-left or bottom-right)
                 if (i + 1 < 6 && j + 1 < 6 && board[i + 1][j + 1] === player) {
-                    utility -= 9999;
+                    utility -= 999;
                 }
                 // Check 2 diagonal (top-right or bottom-left)
                 if (i + 1 < 6 && j - 1 >= 0 && board[i + 1][j - 1] === player) {
-                    utility -= 9999;
+                    utility -= 999;
                 }
 
                 utility -= 30 // try to push human pieces off; no human pieces best
@@ -233,7 +233,7 @@ function Calc_Utility(board,row = null, col = null) {
 //AI Heuristic - Normal (utility maximising; 1-step; local maxima)
 function AI_Normal() {
     let best_move = [10,10]
-    let max_utility = -9999
+    let max_utility = -99999
     for (let i = 0; i < 6; i++) {
         for (let j = 0; j < 6; j++) {
             if (boardState[i][j] !== "") {continue} // skips occupied
@@ -256,25 +256,84 @@ function AI_Normal() {
 
 //AI Heuristic - Terminator (minimax; alpha-beta pruning; 5-step but might crash)
 function AI_Terminator() {
-    let best_move = [10,10]
-    best_move = minimax(boardState,5,-9999,9999,True)
-    return [row,col]
+    let [utility,best_moves] = minimax(boardState,3,-99999,99999,true)
+    // console.log("terminator:" + utility,best_moves)
+    return best_moves.slice(-1).pop()
+}
+
+function move_gen() {
+    let moves = []
+    for (let i = 0; i < 6; i++) {
+        for (let j = 0; j < 6; j++) {
+            moves.push([i,j])
+        }
+    }
+    moves.sort(function (a, b) {
+        return Math.random() - 0.5;
+    });
+    return moves
 }
 
 function minimax(board, depth, alpha, beta, AI) {
     if (depth === 0) {
-        return Calc_Utility(board), []
+        return [Calc_Utility(board), []]
     }
 
-    if (AI) {
-        utility = -99999
-        
-
-        
-    }
-
-    else {
-        utility = 99999
+    let best_move = null
+    let best_moves = []
+    if (AI) { // maximiser
+        let utility = -99999
+        for (let move of move_gen()) {
+            let i = move[0]
+            let j = move[1]
+            // console.log("max:" + i + "," + j)
+            if (board[i][j] !== "") {continue}
+            let new_board = AIboopTokens(i,j,JSON.parse(JSON.stringify(board)),true)
+            // console.log(new_board)
+            let [new_utility, moves] = minimax(new_board,depth - 1, alpha, beta,false)
+            // console.log("catch max:" + new_utility, moves, utility)
+            if (new_utility > utility) {
+                utility = new_utility
+                best_move = move
+                best_moves = moves
+            }
+            alpha = Math.max(alpha, utility)
+            if (alpha >= beta) {
+                break
+            }
+        }
+        if (best_move) {
+            best_moves.push(best_move)
+        }
+        // console.log("bestest:" + utility,best_moves)
+        return [utility, best_moves]
+    } 
+    else { //minimiser
+        let utility = 99999
+        for (let move of move_gen()) {
+            let i = move[0]
+            let j = move[1]
+            // console.log("min:" + i + "," + j)
+            if (board[i][j] !== "") {continue}
+            let new_board = AIboopTokens(i,j,JSON.parse(JSON.stringify(board)),false)
+            // console.log(new_board)
+            let [new_utility,moves] = minimax(new_board, depth - 1, alpha, beta, true)
+            // console.log("catch min:" + utility,moves)
+            if (new_utility < utility) {
+                utility = new_utility
+                best_move = move
+                best_moves = moves
+            }
+            beta = Math.min(beta, utility)
+            if (beta <= alpha) {
+                break
+            }
+        }
+        if (best_move) {
+            best_moves.push(best_move)
+        }
+        // console.log("bestester:" + utility,best_moves)
+        return [utility, best_moves]
     }
 }
 // Function to update turn indicator
@@ -282,9 +341,14 @@ function updateTurnIndicator() {
     turnIndicator.innerText = `Current Turn: Player ${currentPlayer}`;
 }
 
-function AIboopTokens(row, col,board) {
+function AIboopTokens(row, col,board,AI = true) {
     const directions = [[-1, 0], [1, 0], [0, -1], [0, 1], [-1, -1], [-1, 1], [1, -1], [1, 1]];
-    board[row][col] = "O";
+    if (AI) {
+        board[row][col] = "O";
+    } else {
+        board[row][col] = "X"
+    }
+    
     for (const [dx, dy] of directions) {
         let x = row + dx;
         let y = col + dy;
