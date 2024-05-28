@@ -133,19 +133,19 @@ function Calc_Utility(board,row = null, col = null) {
             if (board[i][j] === AI) {
                 // Check horizontal win
                 if (j + 2 < 6 && board[i][j + 1] === AI && board[i][j + 2] === AI) {
-                    utility += 10999;
+                    utility += 9999;
                 }
                 // Check vertical win
                 if (i + 2 < 6 && board[i + 1][j] === AI && board[i + 2][j] === AI) {
-                    utility += 10999;
+                    utility += 9999;
                 }
                 // Check diagonal win (top-left to bottom-right)
                 if (i + 2 < 6 && j + 2 < 6 && board[i + 1][j + 1] === AI && board[i + 2][j + 2] === AI) {
-                    utility += 10999;
+                    utility += 9999;
                 }
                 // Check diagonal win (top-right to bottom-left)
                 if (i + 2 < 6 && j - 2 >= 0 && board[i + 1][j - 1] === AI && board[i + 2][j - 2] === AI) {
-                    utility += 10999;
+                    utility += 9999;
                 }
                 // Check 2 horizontal 
                 if (j + 1 < 6 && board[i][j + 1] === AI) {
@@ -173,35 +173,35 @@ function Calc_Utility(board,row = null, col = null) {
             if (board[i][j] === player) {
                 // Check horizontal lose
                 if (j + 2 < 6 && board[i][j + 1] === player && board[i][j + 2] === player) {
-                    utility -= 9999;
+                    utility -= 10999;
                 }
                 // Check vertical lose
                 if (i + 2 < 6 && board[i + 1][j] === player && board[i + 2][j] === player) {
-                    utility -= 9999;
+                    utility -= 10999;
                 }
                 // Check diagonal lose (top-left to bottom-right)
                 if (i + 2 < 6 && j + 2 < 6 && board[i + 1][j + 1] === player && board[i + 2][j + 2] === player) {
-                    utility -= 9999;
+                    utility -= 10999;
                 }
                 // Check diagonal lose (top-right to bottom-left)
                 if (i + 2 < 6 && j - 2 >= 0 && board[i + 1][j - 1] === player && board[i + 2][j - 2] === player) {
-                    utility -= 9999;
+                    utility -= 10999;
                 }
                 // Check 2 horizontal 
                 if (j + 1 < 6 && board[i][j + 1] === player) {
-                    utility -= 999; // equal utility (lose) cos lose on next move
+                    utility -= 10999; // equal utility (lose) cos lose on next move
                 }
                 // Check 2 vertical 
                 if (i + 1 < 6 && board[i + 1][j] === player) {
-                    utility -= 999;
+                    utility -= 10999;
                 }
                 // Check 2 diagonal (top-left or bottom-right)
                 if (i + 1 < 6 && j + 1 < 6 && board[i + 1][j + 1] === player) {
-                    utility -= 999;
+                    utility -= 10999;
                 }
                 // Check 2 diagonal (top-right or bottom-left)
                 if (i + 1 < 6 && j - 1 >= 0 && board[i + 1][j - 1] === player) {
-                    utility -= 999;
+                    utility -= 10999;
                 }
 
                 utility -= 30 // try to push human pieces off; no human pieces best
@@ -256,7 +256,7 @@ function AI_Normal() {
 
 //AI Heuristic - Terminator (minimax; alpha-beta pruning; 5-step but might crash)
 function AI_Terminator() {
-    let [utility,best_moves] = minimax(boardState,4,-99999,99999,true)
+    let [utility,best_moves] = minimax(boardState,5,-99999,99999,true)
     // console.log("terminator:" + utility,best_moves)
     return best_moves.slice(-1).pop()
 }
@@ -367,6 +367,7 @@ function minimax(board, depth, alpha, beta, AI) {
         return [utility, best_moves]
     }
 }
+
 // Function to update turn indicator
 function updateTurnIndicator() {
     turnIndicator.innerText = `Current Turn: Player ${currentPlayer}`;
