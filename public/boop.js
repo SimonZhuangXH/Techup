@@ -124,7 +124,7 @@ function Calc_Utility(board,row = null, col = null) {
     let player = "X"
     let utility = 0
     if (row > 1 && row < 4 && col > 1 && col < 4) { // arbitrary tie breaker preferring centre cells
-        utility += rand(5,9)
+        utility += 8
         // console.log("centre bonus:" + utility)
     }
     for (let i = 0; i < 6; i++) {
@@ -173,35 +173,35 @@ function Calc_Utility(board,row = null, col = null) {
             if (board[i][j] === player) {
                 // Check horizontal lose
                 if (j + 2 < 6 && board[i][j + 1] === player && board[i][j + 2] === player) {
-                    utility -= 10999;
+                    utility -= 19999;
                 }
                 // Check vertical lose
                 if (i + 2 < 6 && board[i + 1][j] === player && board[i + 2][j] === player) {
-                    utility -= 10999;
+                    utility -= 19999;
                 }
                 // Check diagonal lose (top-left to bottom-right)
                 if (i + 2 < 6 && j + 2 < 6 && board[i + 1][j + 1] === player && board[i + 2][j + 2] === player) {
-                    utility -= 10999;
+                    utility -= 19999;
                 }
                 // Check diagonal lose (top-right to bottom-left)
                 if (i + 2 < 6 && j - 2 >= 0 && board[i + 1][j - 1] === player && board[i + 2][j - 2] === player) {
-                    utility -= 10999;
+                    utility -= 19999;
                 }
                 // Check 2 horizontal 
                 if (j + 1 < 6 && board[i][j + 1] === player) {
-                    utility -= 10999; // equal utility (lose) cos lose on next move
+                    utility -= 19999; // equal utility (lose) cos lose on next move
                 }
                 // Check 2 vertical 
                 if (i + 1 < 6 && board[i + 1][j] === player) {
-                    utility -= 10999;
+                    utility -= 19999;
                 }
                 // Check 2 diagonal (top-left or bottom-right)
                 if (i + 1 < 6 && j + 1 < 6 && board[i + 1][j + 1] === player) {
-                    utility -= 10999;
+                    utility -= 19999;
                 }
                 // Check 2 diagonal (top-right or bottom-left)
                 if (i + 1 < 6 && j - 1 >= 0 && board[i + 1][j - 1] === player) {
-                    utility -= 10999;
+                    utility -= 19999;
                 }
 
                 utility -= 30 // try to push human pieces off; no human pieces best
@@ -268,9 +268,9 @@ function move_gen() {
             moves.push([i,j])
         }
     }
-    moves.sort(function (a, b) {
-        return Math.random() - 0.5;
-    });
+    // moves.sort(function (a, b) {
+    //     return Math.random() - 0.5;
+    // });
     return moves
 }
 
