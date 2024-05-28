@@ -256,7 +256,7 @@ function AI_Normal() {
 
 //AI Heuristic - Terminator (minimax; alpha-beta pruning; 5-step but might crash)
 function AI_Terminator() {
-    let [utility,best_moves] = minimax(boardState,5,-99999,99999,true)
+    let [utility,best_moves] = minimax(boardState,4,-99999,99999,true)
     // console.log("terminator:" + utility,best_moves)
     return best_moves.slice(-1).pop()
 }
@@ -274,8 +274,7 @@ function move_gen() {
     return moves
 }
 
-function AI_checkWin(board) {
-    let player = "O"
+function AI_checkWin(board,player) {
     for (let i = 0; i < 6; i++) {
         for (let j = 0; j < 6; j++) {
             if (board[i][j] === player) {
@@ -302,10 +301,13 @@ function AI_checkWin(board) {
 }
 
 function minimax(board, depth, alpha, beta, AI) {
-    if (depth === 0) {
+    if (AI_checkWin(board,"O")) { //check win
         return [Calc_Utility(board), []]
     }
-    if (AI_checkWin(board)) {
+    if (AI_checkWin(board,"X")) { //check lose
+        return [Calc_Utility(board), []]
+    }
+    if (depth === 0) {
         return [Calc_Utility(board), []]
     }
     let best_move = null
